@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>Branch and Jump Instructions</title>
+<meta name="description" content="Branch and Jump Instructions">
+<meta name="keywords" content="spim">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+
+<meta name="Generator" content="LaTeX2HTML v2002-2-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+
+<link rel="STYLESHEET" href="Branch%20and%20Jump%20Instructions_files/spim.css">
+
+<link rel="next" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node17.html">
+<link rel="previous" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node15.html">
+<link rel="up" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node9.html">
+<link rel="next" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node17.html">
+</head>
+
+<body data-new-gr-c-s-check-loaded="8.904.0" data-gr-ext-installed="">
+
+<div class="navigation"><!--Navigation Panel-->
+<a name="tex2html218" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node17.html">
+<img alt="next" src="Branch%20and%20Jump%20Instructions_files/next.png" width="37" height="24" border="0" align="BOTTOM"></a> 
+<a name="tex2html216" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node9.html">
+<img alt="up" src="Branch%20and%20Jump%20Instructions_files/up.png" width="26" height="24" border="0" align="BOTTOM"></a> 
+<a name="tex2html210" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node15.html">
+<img alt="previous" src="Branch%20and%20Jump%20Instructions_files/prev.png" width="63" height="24" border="0" align="BOTTOM"></a>   
+<br>
+<b> Next:</b> <a name="tex2html219" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node17.html">Load Instructions</a>
+<b> Up:</b> <a name="tex2html217" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node9.html">Description of the MIPS</a>
+<b> Previous:</b> <a name="tex2html211" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node15.html">Comparison Instructions</a>
+<br>
+<br></div>
+<!--End of Navigation Panel-->
+
+<h2><a name="SECTION00027000000000000000">
+Branch and Jump Instructions</a>
+</h2>
+
+<p>
+In all instructions below, <tt>Src2</tt> can either be a register or an
+immediate value (integer).  Branch instructions use a signed 16-bit
+offset field; hence they can jump <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img16.png" alt="$2^{15}-1$" width="58" height="39" border="0" align="MIDDLE"></span> <em>instructions</em> (not
+bytes) forward or <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img17.png" alt="$2^{15}$" width="28" height="21" border="0" align="BOTTOM"></span> instructions backwards.  The <em>jump</em>
+instruction contains a 26 bit address field.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>b label</tt>Branch instruction <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+Unconditionally branch to the instruction at the label.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>bc<em>z</em>t label</tt>Branch Coprocessor <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img18.png" alt="$z$" width="13" height="14" border="0" align="BOTTOM"></span> True
+<br></em>
+<em><tt>bc<em>z</em>f label</tt>Branch Coprocessor <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img18.png" alt="$z$" width="13" height="14" border="0" align="BOTTOM"></span> False
+<br></em>
+Conditionally branch to the instruction at the label if coprocessor
+<span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img18.png" alt="$z$" width="13" height="14" border="0" align="BOTTOM"></span>'s condition flag is true (false).
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>beq Rsrc1, Src2, label</tt>Branch on Equal
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of register <tt>Rsrc1</tt> equals <tt>Src2</tt>.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>beqz Rsrc, label</tt>Branch on Equal Zero <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of <tt>Rsrc</tt> equals 0.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>bge Rsrc1, Src2, label</tt>Branch on Greater Than Equal <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+<em><tt>bgeu Rsrc1, Src2, label</tt>Branch on GTE Unsigned <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of register <tt>Rsrc1</tt> are greater than or equal to <tt>Src2</tt>.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>bgez Rsrc, label</tt>Branch on Greater Than Equal Zero
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of <tt>Rsrc</tt> are greater than or equal to 0.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>bgezal Rsrc, label</tt>Branch on Greater Than Equal Zero And Link
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of <tt>Rsrc</tt> are greater than or equal to 0. Save the address of
+the next instruction in register 31.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>bgt Rsrc1, Src2, label</tt>Branch on Greater Than <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+<em><tt>bgtu Rsrc1, Src2, label</tt>Branch on Greater Than Unsigned <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of register <tt>Rsrc1</tt> are greater than <tt>Src2</tt>.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>bgtz Rsrc, label</tt>Branch on Greater Than Zero
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of <tt>Rsrc</tt> are greater than 0.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>ble Rsrc1, Src2, label</tt>Branch on Less Than Equal <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+<em><tt>bleu Rsrc1, Src2, label</tt>Branch on LTE Unsigned <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of register <tt>Rsrc1</tt> are less than or equal to <tt>Src2</tt>.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>blez Rsrc, label</tt>Branch on Less Than Equal Zero
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of <tt>Rsrc</tt> are less than or equal to 0.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>bgezal Rsrc, label</tt>Branch on Greater Than Equal Zero And Link
+<br></em>
+<em><tt>bltzal Rsrc, label</tt>Branch on Less Than And Link
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of <tt>Rsrc</tt> are greater or equal to 0 or less than 0,
+respectively. Save the address of the next instruction in register 31.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>blt Rsrc1, Src2, label</tt>Branch on Less Than <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+<em><tt>bltu Rsrc1, Src2, label</tt>Branch on Less Than Unsigned <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of register <tt>Rsrc1</tt> are less than <tt>Src2</tt>.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>bltz Rsrc, label</tt>Branch on Less Than Zero
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of <tt>Rsrc</tt> are less than 0.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>bne Rsrc1, Src2, label</tt>Branch on Not Equal
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of register <tt>Rsrc1</tt> are not equal to <tt>Src2</tt>.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>bnez Rsrc, label</tt>Branch on Not Equal Zero <span class="MATH"><img src="Branch%20and%20Jump%20Instructions_files/img15.png" alt="${}^{\dagger}$" width="11" height="20" border="0" align="BOTTOM"></span>
+<br></em>
+Conditionally branch to the instruction at the label if the contents
+of <tt>Rsrc</tt> are not equal to 0.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>j label</tt>Jump
+<br></em>
+Unconditionally jump to the instruction at the label.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>jal label</tt>Jump and Link
+<br></em>
+<em><tt>jalr Rsrc</tt>Jump and Link Register
+<br></em>
+Unconditionally jump to the instruction at the label or whose address
+is in register <tt>Rsrc</tt>.  Save the address of the next
+instruction in register 31.
+
+</p><p>
+
+</p><p></p><p>
+<br>
+<em><tt>jr Rsrc</tt>Jump Register
+<br></em>
+Unconditionally jump to the instruction whose address is in register
+<tt>Rsrc</tt>.
+
+</p><p>
+
+</p><div class="navigation"><hr>
+<!--Navigation Panel-->
+<a name="tex2html218" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node17.html">
+<img alt="next" src="Branch%20and%20Jump%20Instructions_files/next.png" width="37" height="24" border="0" align="BOTTOM"></a> 
+<a name="tex2html216" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node9.html">
+<img alt="up" src="Branch%20and%20Jump%20Instructions_files/up.png" width="26" height="24" border="0" align="BOTTOM"></a> 
+<a name="tex2html210" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node15.html">
+<img alt="previous" src="Branch%20and%20Jump%20Instructions_files/prev.png" width="63" height="24" border="0" align="BOTTOM"></a>   
+<br>
+<b> Next:</b> <a name="tex2html219" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node17.html">Load Instructions</a>
+<b> Up:</b> <a name="tex2html217" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node9.html">Description of the MIPS</a>
+<b> Previous:</b> <a name="tex2html211" href="https://www.doc.ic.ac.uk/lab/secondyear/spim/node15.html">Comparison Instructions</a></div>
+<!--End of Navigation Panel-->
+<address>
+Ian Moor
+2009-03-11
+</address>
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>

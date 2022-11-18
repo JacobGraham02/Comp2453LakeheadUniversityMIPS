@@ -48,3 +48,49 @@ skipNewLine:
             li $v0, 10              # terminate
             syscall                 # system call
             .end main
+
+; .data
+; Arr: .word 97, 1610612834, 90465, 340481, 155904  # Array of words Arr[5]
+; length: .word 5          #length of array
+; z: .byte 'a'
+; newline: .asciiz "\n"        #to print newline
+
+; .text
+; main:
+         
+;        la $t0,Arr      	# $t0=base address of A
+;        lw $t1,length    # $t1=length of array
+;        lb $t2,z         # $t2=the byte to be searched
+
+; getnextnum:
+
+;        lw $t3,0($t0)    # load next word in array into $t3
+;        move $t4,$t3     # $t4=$t3
+
+; repeat:
+       
+;        and $t5,$t4,0x000000FF   #get the LSB in $t4 into $t5
+;        bne $t5,$t2,getnextbyte  #if $t5!=$t2, goto getnextbyte
+     
+;        li $v0,1             #if $t5=$t2(byte present in $t3), print $t3
+;        move $a0,$t3         #move number in $t3 to $a0
+;        syscall              #print number using syscall 1
+
+;        li $v0,4              #print string newline using syscall 4
+;        la $a0,newline        #a0=address of string to be printed
+;        syscall
+;        b next                #then goto next
+        
+
+; getnextbyte:
+
+;        srl $t4,$t4,8         #shift $t4 right 8 time(to get next byte in word)
+;        bne $t4,0,repeat      #if $t4!=0, goto repeat
+; next:
+;        addi $t0,$t0,4        #increment $t0 by 4 to get next word in array
+;        addi $t1,$t1,-1       #decrement $t1 by 1 (length of array)
+;        bne $t1,0,getnextnum  #if $t1 !=0, goto getnextnum
+
+; exit:           
+;         li $v0, 10          # to terminate using syscall 10
+;         syscall  

@@ -1,0 +1,157 @@
+Representing floating-point values in binary:
+    There should be a dot after the last-significant bit in a binary number. Following the dot, you iterate from the most- to least-significant digit
+    and multiply that digit by 2^-n, where n is the distance from the most-sigificant digit. Then, you get the fractional representation by taking the sum
+    of the digits.
+
+    Example:
+        101.1011 = 5.(1 x 2^-1) + (0 x 2^-2) + (1 x 2^-3) + (1 x 2^-4)
+
+ 
+Encoding and decoding floating point values:
+    Any numbers in the format of 'n/n' does not represent division. Instead, they represent a subscript number. 
+    -7.75:
+        Determine sign                                  =>  1 (since negative)
+        Convert to binary                               =>  -7.75 = -0111.11
+        Normalized scientific notation                  =>  1.1111 x 2^2
+        Compute biased exponent and convert to binary   => 2/10 + 127/10 = 129/10 = 10000001/2
+        Write components in binary                      => sign     exponent        mantissa
+                                                            1       10000001        1111000000000000000000
+        Convert to hex (split into groups of 4)         => 1100 0000 1111 1000 0000 0000 0000 0000
+                                                            C    0    F    8    0    0    0    0
+        Final result                                    => C0F8 0000/16
+
+
+    41440000 find the decimal value:
+        convert to binary       => 0100 0001 0100 0100 0000 0000 0000 0000/2
+        split into components   => 0 10000010 10001000000000000000000/2
+        determine exponent      => 1000010/2 = 130/10
+            remove bias         => 130/10 - 127/10 = 3/10
+        determine sign          => 0 = positive
+        write result            => +1.10001 x 2^3 = +1100.01 = 12.25
+
+
+IEEE 754 64-bit floating-point standard is as follows:
+    0 - 63 bits (64 bits in size minutes the zero). 
+    s => signed bit (63rd bit)
+    biased exponent => Adding the 'bias' constant to the exponent chosen to make the range of the exponent nonnegative (62nd to 52st bit)
+    fractional representation => decimal value after the last-significant bit (51st to 0 bit)
+
+
+
+QtSpim program format:
+    Two main parts for programs => Data section (where data is placed) and text section (where code is placed)
+
+    An assembler directive tells the assembler some information needed for the assembly process; includes where the data is declared and code is defined. 
+Directives start with a '.' character, and are required to define the start and end of data declarations and to define the start and end of procedures/functions. For example,
+you must use '.data' or '.text'. Diretives are also used to declare data. 
+
+    
+    Data declarations:
+        Must be declared in the .data section. Variable names must start with a letter followed by letters or numbers. They can include some special characters and are
+    terminated by the ':' character. 
+        <variable_name>: .<data_type> <initial_value>
+
+        .byte       => 8-bit variable
+        .half       => 16-bit variable
+        .word       => 32-bit variable
+        .ascii      => ascii string
+        .asziiz     => null terminates ascii string
+        .float      => 32-bit IEEE floating-point number
+        .double     => 64-bit IEEE floating-point number
+        .space <n>  => <n> bytes of uninitialized memory
+
+        Integer values are defined by the first 3 data types. 
+
+    String representations:
+        Sequentially-defined byte-sized characters, generally terminated with a null byte (0x00). They are always defined with .ascii or .asciiz directives. Represented
+    using ASCII characters.
+        \n and \t characters are supported in strings
+        Declaring a string on multiple lines (null termination needed only on last string):
+
+        message: .ascii "Line 1: Goodbye world\n"
+                 .ascii "Line 2: So, long and thanks"
+                 .ascii "for all the fish.\n"
+                 .asciiz "Line 3: game over.\n"
+
+    Floating-point representations (32-bit float or 64-bit double used for decimal values):
+        pi: .float  3.14159
+        tao .double 6.28318
+
+
+    Constants (created with an equal sign):
+        TRUE = 1
+        FALSE = 0
+
+        These are defined in the data section. The use of all capitals is only convention and not required. In assembly, constants are not strictly typed, which means
+    they are not bound to a specific 8- to 64-bit size.
+
+
+    Program code:
+        Any code must be preceeded by the '.text' directive. The '.globl <name>' and '.ent <name>' directives are used to define the name of the initial or main procedure.
+        All procedures should be terminated with the '.end <name>' directive. 
+
+
+    Labels:
+        Code locations, typically a function/procedure name or as the target of a jump. First use is the main program starting location, which must be 'main'. 
+        The rules for a label are as follows:
+            Must start with a letter;
+            May be followed by letters, numbers, or a '_' character
+            Must be terminated with a colon ':' character
+            May only be defined once
+        Additionally, characters in a label are case-sensitive.
+
+
+    Program template:
+        General template for all programs:
+
+        ###################################################################
+        # Name and general description of program
+
+        #------------------------------------------------------------------
+        # Data declarations 
+
+        .data
+        # program specfiic data declarations
+    
+        # -----------------------------------------------------------------
+        # program code goes in this section
+        .text
+        .globl main
+        .ent main
+        main:
+            # Your program code goes here
+
+        
+            # Must use the following when terminating the program
+            li $v0, 10
+            syscall
+        .end main
+
+
+
+Instruction set overview:
+    Pseudo-instructions:
+        A pseudo-instruction is an instruction that the assembler, or simulator, will recognize and convert into one or more bare-instructions. 
+
+    National conventions:
+        Generally, instructions consist of the instruction or operation itself (i.e. add, sub, mul, etc) and the operands. Operands refers to where the data (to be operated on) is coming from, or where the result will be placed. 
+
+        Operand notation                Description
+        Rdest                           Destination operand. must be an integer register. The contents of the register will be overwritten with the new result
+        Rsrc                            Source operand. Must be an integer register. The register value is unchanged after the instruction
+        Src                             Source operand. Can be either an integer register or an immediate integer value. 
+        FRdest                          Destination operand. Must be a floating-point register. The contens of the register will be overwritten with the new result
+        FRsrc                           Source operand. Must be a floating-point register. Register value is unchanged after the instruction
+        Imm                             Immediate value
+        Mem                             Memory location. May be a variable name or an indirect reference (i.e., memory address)
+        
+        By default, values are represented as decimal or base-10. Base-16 (hexadecimal) can be used, but those values must be preceeded with a 0x to indicate this.
+        For example, 15 in base-16 can be represented as 0xF
+
+    
+    Data movement:
+        CPU computations are typically performed using registers. Data is moved into and out of these registers to execute some CPU instructions.
+
+
+        Load and store:
+            Continue from 5.3.1
